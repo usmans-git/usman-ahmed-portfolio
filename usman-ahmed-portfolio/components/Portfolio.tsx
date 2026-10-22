@@ -633,6 +633,7 @@ export function Portfolio() {
                   alt="Usman Ahmed - Project Team Lead"
                   fill
                   priority
+                  unoptimized
                   sizes="(max-width: 1024px) 100vw, 45vw"
                   className="portrait-image"
                 />
