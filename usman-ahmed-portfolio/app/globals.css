@@ -2097,13 +2097,6 @@ button {
     margin-bottom: 0 !important;
   }
 
-  .mobile-swipe-track.compact-projects-grid > * {
-    flex: 0 0 76% !important;
-    max-width: 270px !important;
-    scroll-snap-align: center !important;
-    margin-bottom: 0 !important;
-  }
-
   .mobile-swipe-track.competencies-bento > * {
     flex: 0 0 86% !important;
     max-width: 340px !important;
@@ -2146,5 +2139,152 @@ button {
     border-radius: 999px;
     background: var(--accent);
     box-shadow: 0 0 10px rgba(99, 142, 255, 0.6);
+  }
+}
+
+/* ========================================================
+   Mobile Two-Row Auto-Moving Marquee Styles
+   ======================================================== */
+.desktop-projects-directory {
+  display: block;
+}
+
+.mobile-marquee-directory {
+  display: none;
+}
+
+@keyframes marquee-scroll-left {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marquee-scroll-right {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (max-width: 768px) {
+  .desktop-projects-directory {
+    display: none !important;
+  }
+
+  .filters-row {
+    display: none !important;
+  }
+
+  .mobile-marquee-directory {
+    display: flex !important;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 18px;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .mobile-marquee-track-wrap {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    padding: 3px 0;
+  }
+
+  .mobile-marquee-track {
+    display: flex;
+    gap: 12px;
+    width: max-content;
+    will-change: transform;
+  }
+
+  .mobile-marquee-track.row-left {
+    animation: marquee-scroll-left 32s linear infinite;
+  }
+
+  .mobile-marquee-track.row-right {
+    animation: marquee-scroll-right 34s linear infinite;
+  }
+
+  .mobile-marquee-track:active,
+  .mobile-marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  .mobile-marquee-card {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px 8px 10px;
+    border-radius: 999px;
+    background: rgba(14, 16, 24, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-marquee-card:active {
+    background: rgba(99, 142, 255, 0.15);
+    border-color: rgba(99, 142, 255, 0.4);
+    transform: scale(0.97);
+  }
+
+  .mobile-marquee-logo {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #0d0f15;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+    padding: 3px;
+  }
+
+  .mobile-marquee-img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+  }
+
+  .mobile-marquee-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    text-align: left;
+  }
+
+  .mobile-marquee-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: #ffffff;
+    line-height: 1.2;
+  }
+
+  .mobile-marquee-category {
+    font-size: 9.5px;
+    font-family: var(--font-mono);
+    color: var(--accent-light);
+    letter-spacing: 0.03em;
+    line-height: 1;
+  }
+
+  .mobile-marquee-arrow {
+    color: var(--accent);
+    opacity: 0.75;
+    margin-left: 2px;
+    flex-shrink: 0;
   }
 }

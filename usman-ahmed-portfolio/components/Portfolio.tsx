@@ -483,6 +483,9 @@ export function Portfolio() {
     ? filteredCompactProjects
     : filteredCompactProjects.slice(0, 9);
 
+  const marqueeRow1 = additionalProjects.slice(0, 11);
+  const marqueeRow2 = additionalProjects.slice(11);
+
   return (
     <main>
       {/* Background Ambient Lighting (VESPER Style) */}
@@ -851,49 +854,119 @@ export function Portfolio() {
               </div>
             </div>
 
-            <MobileSwipeContainer className="compact-projects-grid" itemCount={visibleCompact.length} label="Projects">
-              {visibleCompact.map((proj) => (
-                <a
-                  key={proj.name}
-                  href={proj.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="compact-project-card"
-                >
-                  <div className="compact-logo">
-                    <Image
-                      src={proj.logo}
-                      alt={proj.name}
-                      width={28}
-                      height={28}
-                      className="compact-logo-img"
-                      unoptimized
-                    />
-                  </div>
-                  <div className="compact-info">
-                    <div className="compact-category">{proj.category}</div>
-                    <div className="compact-name">{proj.name}</div>
-                  </div>
-                  <ArrowUpRight size={16} className="compact-arrow" />
-                </a>
-              ))}
-            </MobileSwipeContainer>
+            {/* Desktop View: Interactive Grid with Filters & Toggle */}
+            <div className="desktop-projects-directory">
+              <div className="compact-projects-grid">
+                {visibleCompact.map((proj) => (
+                  <a
+                    key={proj.name}
+                    href={proj.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="compact-project-card"
+                  >
+                    <div className="compact-logo">
+                      <Image
+                        src={proj.logo}
+                        alt={proj.name}
+                        width={28}
+                        height={28}
+                        className="compact-logo-img"
+                        unoptimized
+                      />
+                    </div>
+                    <div className="compact-info">
+                      <div className="compact-category">{proj.category}</div>
+                      <div className="compact-name">{proj.name}</div>
+                    </div>
+                    <ArrowUpRight size={16} className="compact-arrow" />
+                  </a>
+                ))}
+              </div>
 
-            <div className="toggle-all-wrap">
-              <button
-                onClick={() => setShowAllCompact(!showAllCompact)}
-                className="btn-secondary"
-                style={{ fontSize: "12px", padding: "10px 20px" }}
-              >
-                <span>{showAllCompact ? "Show Less" : "View All Delivered Projects"}</span>
-                <ChevronDown
-                  size={15}
-                  style={{
-                    transform: showAllCompact ? "rotate(180deg)" : "rotate(0deg)",
-                    transition: "transform 0.2s ease"
-                  }}
-                />
-              </button>
+              <div className="toggle-all-wrap">
+                <button
+                  onClick={() => setShowAllCompact(!showAllCompact)}
+                  className="btn-secondary"
+                  style={{ fontSize: "12px", padding: "10px 20px" }}
+                >
+                  <span>{showAllCompact ? "Show Less" : "View All Delivered Projects"}</span>
+                  <ChevronDown
+                    size={15}
+                    style={{
+                      transform: showAllCompact ? "rotate(180deg)" : "rotate(0deg)",
+                      transition: "transform 0.2s ease"
+                    }}
+                  />
+                </button>
+              </div>
+            </div>
+
+            {/* Mobile View: Two-Row Auto-Moving Infinite Logo Marquee */}
+            <div className="mobile-marquee-directory">
+              <div className="mobile-marquee-track-wrap">
+                {/* Row 1: Scrolling Left */}
+                <div className="mobile-marquee-track row-left">
+                  {[...marqueeRow1, ...marqueeRow1].map((proj, idx) => (
+                    <a
+                      key={`r1-${proj.name}-${idx}`}
+                      href={proj.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mobile-marquee-card"
+                      title={proj.name}
+                    >
+                      <div className="mobile-marquee-logo">
+                        <Image
+                          src={proj.logo}
+                          alt={proj.name}
+                          width={24}
+                          height={24}
+                          className="mobile-marquee-img"
+                          unoptimized
+                        />
+                      </div>
+                      <div className="mobile-marquee-info">
+                        <span className="mobile-marquee-name">{proj.name}</span>
+                        <span className="mobile-marquee-category">{proj.category}</span>
+                      </div>
+                      <ArrowUpRight size={13} className="mobile-marquee-arrow" />
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mobile-marquee-track-wrap">
+                {/* Row 2: Scrolling Right */}
+                <div className="mobile-marquee-track row-right">
+                  {[...marqueeRow2, ...marqueeRow2].map((proj, idx) => (
+                    <a
+                      key={`r2-${proj.name}-${idx}`}
+                      href={proj.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mobile-marquee-card"
+                      title={proj.name}
+                    >
+                      <div className="mobile-marquee-logo">
+                        <Image
+                          src={proj.logo}
+                          alt={proj.name}
+                          width={24}
+                          height={24}
+                          className="mobile-marquee-img"
+                          unoptimized
+                        />
+                      </div>
+                      <div className="mobile-marquee-info">
+                        <span className="mobile-marquee-name">{proj.name}</span>
+                        <span className="mobile-marquee-category">{proj.category}</span>
+                      </div>
+                      <ArrowUpRight size={13} className="mobile-marquee-arrow" />
+                    </a>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
