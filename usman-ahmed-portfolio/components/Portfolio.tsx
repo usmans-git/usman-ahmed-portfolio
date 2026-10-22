@@ -13,6 +13,7 @@ import {
   Check,
   CheckCircle2,
   ChevronDown,
+  ChevronLeft,
   ChevronRight,
   Code2,
   Copy,
@@ -350,6 +351,115 @@ function AnimatedCounter({
   );
 }
 
+// Mobile Swiper Container with Left/Right Arrows and Progress Dots
+function MobileSwipeContainer({
+  children,
+  className = "",
+  itemCount,
+  label = "Items",
+}: {
+  children: React.ReactNode;
+  className?: string;
+  itemCount: number;
+  label?: string;
+}) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(itemCount > 1);
+
+  const checkScroll = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const { scrollLeft, scrollWidth, clientWidth } = el;
+    setCanScrollLeft(scrollLeft > 8);
+    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 8);
+
+    const firstChild = el.firstElementChild as HTMLElement;
+    if (firstChild) {
+      const cardWidth = firstChild.offsetWidth + 14;
+      const index = Math.min(
+        Math.max(0, Math.round(scrollLeft / cardWidth)),
+        itemCount - 1
+      );
+      setActiveIndex(index);
+    }
+  };
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    checkScroll();
+    el.addEventListener("scroll", checkScroll, { passive: true });
+    window.addEventListener("resize", checkScroll);
+    return () => {
+      el.removeEventListener("scroll", checkScroll);
+      window.removeEventListener("resize", checkScroll);
+    };
+  }, [itemCount]);
+
+  const handleScroll = (direction: "left" | "right") => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const firstChild = el.firstElementChild as HTMLElement;
+    const scrollAmount = firstChild ? firstChild.offsetWidth + 14 : 320;
+    el.scrollBy({
+      left: direction === "right" ? scrollAmount : -scrollAmount,
+      behavior: "smooth",
+    });
+  };
+
+  return (
+    <div className="mobile-swipe-wrapper">
+      <div className="mobile-swipe-header">
+        <div className="mobile-swipe-hint">
+          <span>Swipe cards</span>
+          <span className="swipe-badge">
+            {activeIndex + 1} / {itemCount}
+          </span>
+        </div>
+        <div className="mobile-swipe-arrows">
+          <button
+            type="button"
+            className="mobile-swipe-btn"
+            onClick={() => handleScroll("left")}
+            disabled={!canScrollLeft}
+            aria-label={`Previous ${label}`}
+            title="Previous"
+          >
+            <ChevronLeft size={16} />
+          </button>
+          <button
+            type="button"
+            className="mobile-swipe-btn"
+            onClick={() => handleScroll("right")}
+            disabled={!canScrollRight}
+            aria-label={`Next ${label}`}
+            title="Next"
+          >
+            <ChevronRight size={16} />
+          </button>
+        </div>
+      </div>
+
+      <div ref={scrollRef} className={`mobile-swipe-track ${className}`}>
+        {children}
+      </div>
+
+      {itemCount > 1 && (
+        <div className="mobile-swipe-dots">
+          {Array.from({ length: Math.min(itemCount, 8) }).map((_, i) => (
+            <span
+              key={i}
+              className={`mobile-swipe-dot ${i === activeIndex ? "active" : ""}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function Portfolio() {
   const [navOpen, setNavOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
@@ -552,7 +662,7 @@ export function Portfolio() {
           </div>
 
           {/* Key Metrics Strip (Bento) */}
-          <div className="metrics-strip">
+          <MobileSwipeContainer className="metrics-strip" itemCount={4} label="Key Stats">
             <div className="metric-bento-card">
               <div className="metric-value">
                 <AnimatedCounter target={60} delay={0} />
@@ -588,7 +698,7 @@ export function Portfolio() {
               <div className="metric-label">Years Leadership</div>
               <div className="metric-desc">Combining Computer Science foundation with MS in Project Management</div>
             </div>
-          </div>
+          </MobileSwipeContainer>
         </div>
       </section>
 
@@ -605,7 +715,7 @@ export function Portfolio() {
             </p>
           </div>
 
-          <div className="process-grid">
+          <MobileSwipeContainer className="process-grid" itemCount={processPhases.length} label="Phases">
             {processPhases.map((phase) => (
               <div key={phase.step} className="process-card">
                 <span className="process-watermark">{phase.step}</span>
@@ -628,7 +738,7 @@ export function Portfolio() {
                 </div>
               </div>
             ))}
-          </div>
+          </MobileSwipeContainer>
         </div>
       </section>
 
@@ -645,7 +755,7 @@ export function Portfolio() {
             </p>
           </div>
 
-          <div className="case-studies-grid">
+          <MobileSwipeContainer className="case-studies-grid" itemCount={featuredProjects.length} label="Case Studies">
             {featuredProjects.map((project) => (
               <article key={project.id} className="case-study-card">
                 <div>
@@ -716,7 +826,7 @@ export function Portfolio() {
                 </div>
               </article>
             ))}
-          </div>
+          </MobileSwipeContainer>
 
           {/* More Delivered Projects Directory */}
           <div className="more-projects-box">
@@ -741,7 +851,7 @@ export function Portfolio() {
               </div>
             </div>
 
-            <div className="compact-projects-grid">
+            <MobileSwipeContainer className="compact-projects-grid" itemCount={visibleCompact.length} label="Projects">
               {visibleCompact.map((proj) => (
                 <a
                   key={proj.name}
@@ -767,7 +877,7 @@ export function Portfolio() {
                   <ArrowUpRight size={16} className="compact-arrow" />
                 </a>
               ))}
-            </div>
+            </MobileSwipeContainer>
 
             <div className="toggle-all-wrap">
               <button
@@ -926,7 +1036,7 @@ export function Portfolio() {
             </p>
           </div>
 
-          <div className="competencies-bento">
+          <MobileSwipeContainer className="competencies-bento" itemCount={7} label="Competencies">
             {/* Box 1: PM Leadership */}
             <div className="bento-box">
               <div className="bento-header">
@@ -1061,7 +1171,7 @@ export function Portfolio() {
                 <span className="skill-tag">Executive Presentation</span>
               </div>
             </div>
-          </div>
+          </MobileSwipeContainer>
         </div>
       </section>
 
@@ -1080,7 +1190,7 @@ export function Portfolio() {
           </div>
 
           {/* Dual Academic Hero Bento Cards */}
-          <div className="academic-degrees-grid">
+          <MobileSwipeContainer className="academic-degrees-grid" itemCount={2} label="Degrees">
             {/* Degree 1: MS Project Management */}
             <div className="degree-hero-card">
               <span className="degree-watermark">MS</span>
@@ -1144,7 +1254,7 @@ export function Portfolio() {
                 <span className="degree-skill-pill">API &amp; System Integration</span>
               </div>
             </div>
-          </div>
+          </MobileSwipeContainer>
 
           {/* Certifications Sub-Header */}
           <div className="certs-sub-header">
@@ -1159,7 +1269,7 @@ export function Portfolio() {
           </div>
 
           {/* 4-Card Certification Grid */}
-          <div className="cert-grid-v2">
+          <MobileSwipeContainer className="cert-grid-v2" itemCount={4} label="Certifications">
             {/* Cert 1 */}
             <div className="cert-card-v2">
               <div className="cert-v2-top">
@@ -1243,7 +1353,7 @@ export function Portfolio() {
                 </span>
               </div>
             </div>
-          </div>
+          </MobileSwipeContainer>
         </div>
       </section>
 
