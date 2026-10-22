@@ -49,6 +49,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.png" type="image/png" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/favicon.png" />
+        <link rel="preload" as="image" href="/usman-ahmed.jpg?v=20261022" />
         <link rel="preconnect" href="https://api.fontshare.com" />
         <link
           rel="stylesheet"

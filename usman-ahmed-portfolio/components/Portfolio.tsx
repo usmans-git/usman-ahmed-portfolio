@@ -597,25 +597,27 @@ export function Portfolio() {
                   <ArrowUpRight size={16} />
                 </a>
 
-                <a
-                  href="https://linkedin.com/in/usmanahmed1603"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="btn-icon-link"
-                  aria-label="LinkedIn Profile"
-                  title="Connect on LinkedIn"
-                >
-                  <Linkedin size={18} />
-                </a>
+                <div className="hero-social-row">
+                  <a
+                    href="https://linkedin.com/in/usmanahmed1603"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn-icon-link"
+                    aria-label="LinkedIn Profile"
+                    title="Connect on LinkedIn"
+                  >
+                    <Linkedin size={18} />
+                  </a>
 
-                <button
-                  onClick={copyEmail}
-                  className="btn-icon-link"
-                  aria-label="Copy Email Address"
-                  title="Copy Email"
-                >
-                  {copied ? <Check size={18} color="#34d399" /> : <Mail size={18} />}
-                </button>
+                  <button
+                    onClick={copyEmail}
+                    className="btn-icon-link"
+                    aria-label="Copy Email Address"
+                    title="Copy Email"
+                  >
+                    {copied ? <Check size={18} color="#34d399" /> : <Mail size={18} />}
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -628,14 +630,12 @@ export function Portfolio() {
               title="Featured on Digital Graphiks: What Our Happy Employees Say"
             >
               <div className="portrait-image-wrapper">
-                <Image
-                  src="/usman-ahmed.jpg"
+                <img
+                  src="/usman-ahmed.jpg?v=20261022"
                   alt="Usman Ahmed - Project Team Lead"
-                  fill
-                  priority
-                  unoptimized
-                  sizes="(max-width: 1024px) 100vw, 45vw"
                   className="portrait-image"
+                  loading="eager"
+                  decoding="async"
                 />
                 <div className="portrait-gradient-overlay" />
                 <div className="portrait-click-hint">
