@@ -413,7 +413,6 @@ function MobileSwipeContainer({
     <div className="mobile-swipe-wrapper">
       <div className="mobile-swipe-header">
         <div className="mobile-swipe-hint">
-          <span>Swipe cards</span>
           <span className="swipe-badge">
             {activeIndex + 1} / {itemCount}
           </span>
