@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%" fill="none">
+  <defs>
+    <linearGradient id="opt1b-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#141724"/>
+      <stop offset="100%" stop-color="#0a0b10"/>
+    </linearGradient>
+
+    <linearGradient id="opt1b-blue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8cb0ff"/>
+      <stop offset="100%" stop-color="#5584ff"/>
+    </linearGradient>
+
+    <linearGradient id="opt1b-white" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#cfd5e6"/>
+    </linearGradient>
+
+    <filter id="opt1b-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#638eff" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Sleek Squircle Glass Tile -->
+  <rect x="3" y="3" width="114" height="114" rx="26" fill="url(#opt1b-bg)" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1.5"/>
+  <rect x="3" y="3" width="114" height="114" rx="26" fill="none" stroke="url(#opt1b-blue)" stroke-width="1" opacity="0.45"/>
+
+  <!-- Futuristic Monogram: Left stroke forms U, right stroke rises to A with electric crossbar -->
+  <g transform="translate(14, 14)">
+    <!-- 'U' Left wing and bottom curve -->
+    <path d="M 16 18 L 28 18 L 28 54 C 28 65 37 72 48 72 C 58 72 65 66 67 58 L 56 56 C 54 60 51 62 47 62 C 42 62 38 58 38 52 L 38 18 L 50 18 L 50 48 C 50 51 52 53 55 53 C 58 53 60 51 60 48 L 60 36 L 48 36 L 48 26 L 68 26 L 72 18 Z" 
+          fill="url(#opt1b-white)" />
+
+    <!-- 'A' Dynamic Apex & Right Leg -->
+    <path d="M 44 22 L 56 12 L 80 72 L 67 72 L 62 58 L 42 58 L 46 48 L 58 48 L 54 36 L 48 44 Z" 
+          fill="url(#opt1b-blue)" filter="url(#opt1b-glow)"/>
+
+    <!-- Luminous Status Pulse Dot -->
+    <circle cx="82" cy="18" r="4" fill="#638eff" filter="url(#opt1b-glow)"/>
+  </g>
+</svg>
