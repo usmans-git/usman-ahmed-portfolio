@@ -50,7 +50,12 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/favicon.png" />
         <link rel="preload" as="image" href="/usman-ahmed.jpg?v=20261022" />
+        <link rel="dns-prefetch" href="https://api.fontshare.com" />
+        <link rel="dns-prefetch" href="https://cdn.fontshare.com" />
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <link rel="preconnect" href="https://api.fontshare.com" />
+        <link rel="preconnect" href="https://cdn.fontshare.com" crossOrigin="anonymous" />
         <link
           rel="stylesheet"
           href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap"

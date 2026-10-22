@@ -2,8 +2,24 @@
 const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
+  compress: true,
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production' ? { exclude: ['error'] } : false,
+  },
+  experimental: {
+    optimizePackageImports: ['lucide-react'],
+  },
   async headers() {
     return [
+      {
+        source: '/:all*(svg|jpg|png|webp|ico|woff2)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, stale-while-revalidate=86400',
+          },
+        ],
+      },
       {
         source: '/:path*',
         headers: [

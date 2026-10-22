@@ -364,26 +364,31 @@ function MobileSwipeContainer({
   label?: string;
 }) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const rafId = useRef<number | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(itemCount > 1);
 
   const checkScroll = () => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const { scrollLeft, scrollWidth, clientWidth } = el;
-    setCanScrollLeft(scrollLeft > 8);
-    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 8);
+    if (rafId.current !== null) return;
+    rafId.current = requestAnimationFrame(() => {
+      rafId.current = null;
+      const el = scrollRef.current;
+      if (!el) return;
+      const { scrollLeft, scrollWidth, clientWidth } = el;
+      setCanScrollLeft(scrollLeft > 8);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 8);
 
-    const firstChild = el.firstElementChild as HTMLElement;
-    if (firstChild) {
-      const cardWidth = firstChild.offsetWidth + 14;
-      const index = Math.min(
-        Math.max(0, Math.round(scrollLeft / cardWidth)),
-        itemCount - 1
-      );
-      setActiveIndex(index);
-    }
+      const firstChild = el.firstElementChild as HTMLElement;
+      if (firstChild) {
+        const cardWidth = firstChild.offsetWidth + 14;
+        const index = Math.min(
+          Math.max(0, Math.round(scrollLeft / cardWidth)),
+          itemCount - 1
+        );
+        setActiveIndex((prev) => (prev !== index ? index : prev));
+      }
+    });
   };
 
   useEffect(() => {
@@ -391,8 +396,11 @@ function MobileSwipeContainer({
     if (!el) return;
     checkScroll();
     el.addEventListener("scroll", checkScroll, { passive: true });
-    window.addEventListener("resize", checkScroll);
+    window.addEventListener("resize", checkScroll, { passive: true });
     return () => {
+      if (rafId.current !== null) {
+        cancelAnimationFrame(rafId.current);
+      }
       el.removeEventListener("scroll", checkScroll);
       window.removeEventListener("resize", checkScroll);
     };
